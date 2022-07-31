@@ -146,7 +146,7 @@ int main(int argc, char * argv[]){
         fclose(pfile_resumo);
         return 1;
     }
-
+    // cria o arquivo heatmap.txt;
     sprintf(heatmap, "%s/saida/heatmap.txt", argv[1]);
     pfile_heatmap = fopen(heatmap, "w");
     if(!pfile_stats){
@@ -157,7 +157,7 @@ int main(int argc, char * argv[]){
         fclose(pfile_stats);
         return 1;
     }
-
+    // cria o arquivo ranking.txt;
     sprintf(rank, "%s/saida/ranking.txt", argv[1]);
     pfile_rank = fopen(rank, "w");
     if(!pfile_rank){
@@ -669,7 +669,7 @@ tEstatisticas PreencheHeatMap(tJogo jogo){
 
 void ImprimeRanking(tJogo jogo, FILE * pfile_rank){
     int i, j, aux, maior;
-
+    // obtem o maior numero de vezes que a cobra passou em uma especifica posicao;
     for(i = 1; i <= jogo.mapa.linha; i++){
         for(j = 1; j <= jogo.mapa.coluna; j++){
             if(i == 1 && j == 1){
@@ -680,7 +680,7 @@ void ImprimeRanking(tJogo jogo, FILE * pfile_rank){
             }
         }
     }
-
+    // printa do maior para o menor;
     for(aux = maior; aux > 0; aux--){
         for(i = 1; i <= jogo.mapa.linha; i++){
             for(j = 1; j <= jogo.mapa.coluna; j++){
