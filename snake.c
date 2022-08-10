@@ -41,12 +41,12 @@ typedef struct{
 
 typedef struct{
     // resumo e stats;
-    int cont_moves;
-    int nopoint_moves;
-    int moves_down;
-    int moves_up;
-    int moves_left;
-    int moves_right;
+    int cont_moves; // contador de movimentos;
+    int nopoint_moves; // contador de movimentos sem pontuar;
+    int moves_down; // contador de movimentos pra baixo;
+    int moves_up; // contador de movimentos pra cima;
+    int moves_left; // contador de movimentos pra esquerda;
+    int moves_right; // contador de movimentos pra direita;
     // heatmap;
     int heatmap[101][101];
 } tEstatisticas;
@@ -60,66 +60,66 @@ typedef struct{
 } tJogo;
 
 // funcoes para tratar o mapa;
-tMapa LeMapa(tJogo jogo, FILE * pfile);
-void ImprimeMapa(tJogo jogo, FILE * pfile_out);
+tMapa LeMapa(tMapa mapa, FILE * pfile);
+void ImprimeMapa(tMapa mapa, FILE * pfile_out);
 
 // funcoes de inicializacao;
-tCobra IncializaParamCobra(tJogo jogo);
-tEstatisticas InicializaParamStats(tJogo jogo);
-tEstatisticas InicializaHeatMap(tJogo jogo);
+tCobra IncializaParamCobra(tCobra cobra);
+tEstatisticas InicializaParamStats(tEstatisticas stats);
+tEstatisticas InicializaHeatMap(tEstatisticas stats, tMapa mapa, tCobra cobra);
 tJogo InicializaParamJogo(tJogo jogo);
 
 // funcoes base;
 tJogo JogaJogo(tJogo jogo, FILE * pfile_resumo);
 int AcabouJogo(tJogo jogo, FILE * pfile_resumo);
-void ImprimeEstadoJogo(tJogo jogo);
+void ImprimeEstadoJogo(tJogo jogo, tMapa mapa);
 
 // funcoes para tratar estatisticas;
-tEstatisticas PreencheHeatMap(tJogo jogo);
-void ImprimeHeatMap(tJogo jogo, FILE * pfile_heatmap);
-void ImprimeEstatisticas(tJogo jogo, FILE * pfile_stats);
-void ImprimeRanking(tJogo jogo, FILE * pfile_rank);
+tEstatisticas PreencheHeatMap(tCobra cobra, tEstatisticas stats);
+void ImprimeHeatMap(tMapa mapa, tEstatisticas stats, FILE * pfile_heatmap);
+void ImprimeEstatisticas(tEstatisticas stats, FILE * pfile_stats);
+void ImprimeRanking(tMapa mapa, tEstatisticas stats, FILE * pfile_rank);
 
 // funcoes que retornam variavel;
-char ObtemPosCabeca(tJogo jogo);
+char ObtemPosCabeca(tCobra cobra);
 char ObtemLance(tJogo jogo);
-int ObtemTamCorpo(tJogo jogo);
-int ObtemLinhaCorpo(tJogo jogo, int i);
-int ObtemColunaCorpo(tJogo jogo, int i);
-int ObtemLinhaCabeca(tJogo jogo);
-int ObtemColunaCabeca(tJogo jogo);
-int ObtemLinhaMapa(tJogo jogo);
-int ObtemColunaMapa(tJogo jogo);
-int ObtemQtdComida(tJogo jogo);
-int ObtemQtdMoves(tJogo jogo);
+int ObtemTamCorpo(tCobra cobra);
+int ObtemLinhaCorpo(tCobra cobra, int i);
+int ObtemColunaCorpo(tCobra cobra, int i);
+int ObtemLinhaCabeca(tCobra cobra);
+int ObtemColunaCabeca(tCobra cobra);
+int ObtemLinhaMapa(tMapa mapa);
+int ObtemColunaMapa(tMapa cobra);
+int ObtemQtdComida(tMapa mapa);
+int ObtemQtdMoves(tEstatisticas stats);
 
 // funcoes que atualizam variaveis;
-tCobra AtualizaPosInicial(tJogo jogo);
-tCobra AtualizaPosCorpo(tJogo jogo, int l, int c);
-tCobra AtualizaLinhaCorpo(tJogo jogo, int i, int atualiza);
-tCobra AtualizaColunaCorpo(tJogo jogo, int i, int atualiza);
-tCobra AtualizaLinhaCabeca(tJogo jogo, int atualiza);
-tCobra AtualizaColunaCabeca(tJogo jogo, int atualiza);
-tCobra AtualizaMorteCobra(tJogo jogo, int check);
-tCobra AtualizaPosCabeca(tJogo jogo, char check);
-tCobra AdicionaTamCorpo(tJogo jogo);
-tMapa AtualizaMapa(tJogo jogo, int l, int c, char caract);
-tEstatisticas AdicionaContMove(tJogo jogo);
-tEstatisticas AdicionaNoPointMove(tJogo jogo);
-tEstatisticas AdicionaMoveRight(tJogo jogo);
-tEstatisticas AdicionaMoveLeft(tJogo jogo);
-tEstatisticas AdicionaMoveUp(tJogo jogo);
-tEstatisticas AdicionaMoveDown(tJogo jogo);
+tCobra AtualizaPosInicial(tCobra cobra, tMapa mapa);
+tCobra AtualizaPosCorpo(tCobra cobra, int l, int c);
+tCobra AtualizaLinhaCorpo(tCobra cobra, int i, int atualiza);
+tCobra AtualizaColunaCorpo(tCobra cobra, int i, int atualiza);
+tCobra AtualizaLinhaCabeca(tCobra cobra, int atualiza);
+tCobra AtualizaColunaCabeca(tCobra cobra, int atualiza);
+tCobra AtualizaMorteCobra(tCobra cobra, int check);
+tCobra AtualizaPosCabeca(tCobra cobra, char check);
+tCobra AdicionaTamCorpo(tCobra cobra);
+tMapa AtualizaMapa(tMapa mapa, int l, int c, char caract);
+tEstatisticas AdicionaContMove(tEstatisticas stats);
+tEstatisticas AdicionaNoPointMove(tEstatisticas stats);
+tEstatisticas AdicionaMoveRight(tEstatisticas stats);
+tEstatisticas AdicionaMoveLeft(tEstatisticas stats);
+tEstatisticas AdicionaMoveUp(tEstatisticas stats);
+tEstatisticas AdicionaMoveDown(tEstatisticas stats);
 
 // funcoes que verificam algo e retornam 1 ou 0 (V ou F);
-int VerificaMorteCobra(tJogo jogo);
-int UltrapassaLimites(tJogo jogo);
-int EhParede(tJogo jogo, int l, int c);
-int EhComida(tJogo jogo, int l, int c);
-int EhCabecaInicial(tJogo jogo, int l, int c);
-int EhCorpo(tJogo jogo, int l, int c);
-int EhVazio(tJogo jogo, int l, int c);
-int EhTunel(tJogo jogo, int l, int c);
+int VerificaMorteCobra(tCobra cobra);
+int UltrapassaLimites(tCobra cobra, tMapa mapa);
+int EhParede(tMapa mapa, int l, int c);
+int EhComida(tMapa mapa, int l, int c);
+int EhCabecaInicial(tMapa mapa, int l, int c);
+int EhCorpo(tMapa mapa, int l, int c);
+int EhVazio(tMapa mapa, int l, int c);
+int EhTunel(tMapa mapa, int l, int c);
 
 // funcoes secundarias de movimento;
 tCobra MudaPosCabeca(tJogo jogo);
@@ -204,8 +204,8 @@ int main(int argc, char * argv[]){
     tJogo jogo;
 
     // le e imprime mapa;
-    jogo.mapa = LeMapa(jogo, pfile_map);
-    ImprimeMapa(jogo, pfile_out);
+    jogo.mapa = LeMapa(jogo.mapa, pfile_map);
+    ImprimeMapa(jogo.mapa, pfile_out);
 
     // inicializa parametros do jogo, alem do mapa;
     jogo = InicializaParamJogo(jogo);
@@ -215,9 +215,9 @@ int main(int argc, char * argv[]){
         jogo = JogaJogo(jogo, pfile_resumo);
     }
     // imprime estatisticas em seus respectivos arquivos;
-    ImprimeRanking(jogo, pfile_rank);
-    ImprimeEstatisticas(jogo, pfile_stats);
-    ImprimeHeatMap(jogo, pfile_heatmap);
+    ImprimeRanking(jogo.mapa, jogo.stats, pfile_rank);
+    ImprimeEstatisticas(jogo.stats, pfile_stats);
+    ImprimeHeatMap(jogo.mapa, jogo.stats, pfile_heatmap);
 
     fclose(pfile_map);
     fclose(pfile_out);
@@ -229,48 +229,48 @@ int main(int argc, char * argv[]){
     return 0;
 }
 // lendo o mapa;
-tMapa LeMapa(tJogo jogo, FILE * pfile){
+tMapa LeMapa(tMapa mapa, FILE * pfile){
     // le linha e coluna;
-    fscanf(pfile, "%d %d", &jogo.mapa.linha, &jogo.mapa.coluna);
+    fscanf(pfile, "%d %d", &mapa.linha, &mapa.coluna);
 
-    int i, j, linha = jogo.mapa.linha, coluna = jogo.mapa.coluna;
+    int i, j, linha = mapa.linha, coluna = mapa.coluna;
     int cont_comida = 0;
     int cont_tunel = 0;
 
     fscanf(pfile, "%*c"); // consome o \n;
     for(i = 1; i <= linha; i++){
         for(j = 1; j <= coluna; j++){
-            fscanf(pfile, "%c", &jogo.mapa.matriz[i][j]); // le cada elemento do mapa;
-            if(EhComida(jogo, i, j)){
+            fscanf(pfile, "%c", &mapa.matriz[i][j]); // le cada elemento do mapa;
+            if(EhComida(mapa, i, j)){
                 cont_comida++;
             }
-            if(EhTunel(jogo, i, j)){ // armazena as posicoes dos 2 tuneis;
+            if(EhTunel(mapa, i, j)){ // armazena as posicoes dos 2 tuneis;
                 if(!cont_tunel){
-                    jogo.mapa.linha_tunel[0] = i;
-                    jogo.mapa.coluna_tunel[0] = j;
+                    mapa.linha_tunel[0] = i;
+                    mapa.coluna_tunel[0] = j;
                     cont_tunel++;
                 }
                 else{
-                    jogo.mapa.linha_tunel[1] = i;
-                    jogo.mapa.coluna_tunel[1] = j;
+                    mapa.linha_tunel[1] = i;
+                    mapa.coluna_tunel[1] = j;
                 }
             }
         }
         fscanf(pfile, "%*c"); // consome o \n;
     }
-    jogo.mapa.qtd_comida = cont_comida;
+    mapa.qtd_comida = cont_comida;
 
-    return jogo.mapa;
+    return mapa;
 }
 
-void ImprimeMapa(tJogo jogo, FILE * pfile_out){ // imprime mapa no arquivo inicializacao.txt;
-    int i, j, linha = jogo.mapa.linha, coluna = jogo.mapa.coluna;
+void ImprimeMapa(tMapa mapa, FILE * pfile_out){ // imprime mapa no arquivo inicializacao.txt;
+    int i, j, linha = mapa.linha, coluna = mapa.coluna;
     int linha_ini, coluna_ini;
 
     for(i = 1; i <= linha; i++){
         for(j = 1; j <= coluna; j++){
-            fprintf(pfile_out, "%c", jogo.mapa.matriz[i][j]);
-            if(jogo.mapa.matriz[i][j] == RIGHT){
+            fprintf(pfile_out, "%c", mapa.matriz[i][j]);
+            if(mapa.matriz[i][j] == RIGHT){
                 linha_ini = i;
                 coluna_ini = j;
             }
@@ -283,66 +283,66 @@ void ImprimeMapa(tJogo jogo, FILE * pfile_out){ // imprime mapa no arquivo inici
 tJogo InicializaParamJogo(tJogo jogo){
     jogo.pontuacao = 0;
     jogo.lance = '\0';
-    jogo.cobra = IncializaParamCobra(jogo);
-    jogo.stats = InicializaParamStats(jogo);
+    jogo.cobra = IncializaParamCobra(jogo.cobra);
+    jogo.cobra = AtualizaPosInicial(jogo.cobra, jogo.mapa);
+    jogo.stats = InicializaParamStats(jogo.stats);
+    jogo.stats = InicializaHeatMap(jogo.stats, jogo.mapa, jogo.cobra);
 
     return jogo;
 }
 
-tCobra IncializaParamCobra(tJogo jogo){
-    jogo.cobra.pos_cabeca = RIGHT;
-    jogo.cobra.tam_corpo = 0;
-    jogo.cobra.morreu = 0;
-    jogo.cobra = AtualizaPosInicial(jogo);
+tCobra IncializaParamCobra(tCobra cobra){
+    cobra.pos_cabeca = RIGHT;
+    cobra.tam_corpo = 0;
+    cobra.morreu = 0;
 
-    return jogo.cobra;
+    return cobra;
 }
 
-tEstatisticas InicializaParamStats(tJogo jogo){
-    jogo.stats.cont_moves = 0;
-    jogo.stats.nopoint_moves = 0;
-    jogo.stats.moves_down = 0;
-    jogo.stats.moves_up = 0;
-    jogo.stats.moves_left = 0;
-    jogo.stats.moves_right = 0;
-    jogo.stats = InicializaHeatMap(jogo);
+tEstatisticas InicializaParamStats(tEstatisticas stats){
+    stats.cont_moves = 0;
+    stats.nopoint_moves = 0;
+    stats.moves_down = 0;
+    stats.moves_up = 0;
+    stats.moves_left = 0;
+    stats.moves_right = 0;
 
-    return jogo.stats;
+    return stats;
 }
 
-tEstatisticas InicializaHeatMap(tJogo jogo){
+tEstatisticas InicializaHeatMap(tEstatisticas stats, tMapa mapa, tCobra cobra){
     int i, j;
 
-    int linha = ObtemLinhaMapa(jogo), coluna = ObtemColunaMapa(jogo);
+    int linha = ObtemLinhaMapa(mapa), coluna = ObtemColunaMapa(mapa);
     // inicializa cada posicao do heatmap com 0;
     for(i = 1; i <= linha; i++){
         for(j = 1; j <= coluna; j++){
-            jogo.stats.heatmap[i][j] = 0;
+            stats.heatmap[i][j] = 0;
         }
     }
     // preenche com a posicao inicial da cobra;
-    jogo.stats = PreencheHeatMap(jogo);
+    stats = PreencheHeatMap(cobra, stats);
 
-    return jogo.stats;
+    return stats;
 }
 
-tCobra AtualizaPosInicial(tJogo jogo){
-    int i, j, linha = ObtemLinhaMapa(jogo), coluna = ObtemColunaMapa(jogo);
+tCobra AtualizaPosInicial(tCobra cobra, tMapa mapa){
+    int i, j, linha = ObtemLinhaMapa(mapa), coluna = ObtemColunaMapa(mapa);
     // pega a posicao inicial da cobra;
     for(i = 1; i <= linha; i++){
         for(j = 1; j <= coluna; j++){
-            if(EhCabecaInicial(jogo, i, j)){
-                jogo.cobra = AtualizaLinhaCabeca(jogo, i);
-                jogo.cobra = AtualizaColunaCabeca(jogo, j);
+            if(EhCabecaInicial(mapa, i, j)){
+                cobra = AtualizaLinhaCabeca(cobra, i);
+                cobra = AtualizaColunaCabeca(cobra, j);
             }
         }
     }
 
-    return jogo.cobra;
+    return cobra;
 }
 
-char ObtemPosCabeca(tJogo jogo){
-    return jogo.cobra.pos_cabeca;
+char ObtemPosCabeca(tCobra cobra){
+    return cobra.pos_cabeca;
 }
 
 char ObtemLance(tJogo jogo){
@@ -352,183 +352,185 @@ char ObtemLance(tJogo jogo){
     return jogo.lance;
 }
 
-int ObtemTamCorpo(tJogo jogo){
-    return jogo.cobra.tam_corpo;
+int ObtemTamCorpo(tCobra cobra){
+    return cobra.tam_corpo;
 }
 
-int ObtemLinhaCorpo(tJogo jogo, int i){
-    return jogo.cobra.linha_corpo[i];
+int ObtemLinhaCorpo(tCobra cobra, int i){
+    return cobra.linha_corpo[i];
 }
 
-int ObtemColunaCorpo(tJogo jogo, int i){
-    return jogo.cobra.coluna_corpo[i];
+int ObtemColunaCorpo(tCobra cobra, int i){
+    return cobra.coluna_corpo[i];
 }
 
-int ObtemLinhaCabeca(tJogo jogo){
-    return jogo.cobra.linha;
+int ObtemLinhaCabeca(tCobra cobra){
+    return cobra.linha;
 }
 
-int ObtemColunaCabeca(tJogo jogo){
-    return jogo.cobra.coluna;
+int ObtemColunaCabeca(tCobra cobra){
+    return cobra.coluna;
 }
 
-int ObtemLinhaMapa(tJogo jogo){
-    return jogo.mapa.linha;
+int ObtemLinhaMapa(tMapa mapa){
+    return mapa.linha;
 }
 
-int ObtemColunaMapa(tJogo jogo){
-    return jogo.mapa.coluna;
+int ObtemColunaMapa(tMapa mapa){
+    return mapa.coluna;
 }
 
-int ObtemQtdComida(tJogo jogo){
-    return jogo.mapa.qtd_comida;
+int ObtemQtdComida(tMapa mapa){
+    return mapa.qtd_comida;
 }
 
-int ObtemQtdMoves(tJogo jogo){
-    return jogo.stats.cont_moves;
+int ObtemQtdMoves(tEstatisticas stats){
+    return stats.cont_moves;
 }
 
-int ObtemLinhaTunel(tJogo jogo, int pos){
-    return jogo.mapa.linha_tunel[pos];
+int ObtemLinhaTunel(tMapa mapa, int pos){
+    return mapa.linha_tunel[pos];
 }
 
-int ObtemColunaTunel(tJogo jogo, int pos){
-    return jogo.mapa.coluna_tunel[pos];
+int ObtemColunaTunel(tMapa mapa, int pos){
+    return mapa.coluna_tunel[pos];
 }
 
-tCobra AtualizaPosCorpo(tJogo jogo, int l, int c){
-    jogo.cobra.linha_corpo[jogo.cobra.tam_corpo] = l;
-    jogo.cobra.coluna_corpo[jogo.cobra.tam_corpo] = c;
+tCobra AtualizaPosCorpo(tCobra cobra, int l, int c){
+    cobra.linha_corpo[cobra.tam_corpo] = l;
+    cobra.coluna_corpo[cobra.tam_corpo] = c;
 
-    return jogo.cobra;
+    return cobra;
 }
 
-tCobra AtualizaLinhaCorpo(tJogo jogo, int i, int atualiza){
-    jogo.cobra.linha_corpo[i] = atualiza;
+tCobra AtualizaLinhaCorpo(tCobra cobra, int i, int atualiza){
+    cobra.linha_corpo[i] = atualiza;
 
-    return jogo.cobra;
+    return cobra;
 }
 
-tCobra AtualizaColunaCorpo(tJogo jogo, int i, int atualiza){
-    jogo.cobra.coluna_corpo[i] = atualiza;
+tCobra AtualizaColunaCorpo(tCobra cobra, int i, int atualiza){
+    cobra.coluna_corpo[i] = atualiza;
 
-    return jogo.cobra;
+    return cobra;
 }
 
-tCobra AtualizaLinhaCabeca(tJogo jogo, int atualiza){
-    jogo.cobra.linha = atualiza;
+tCobra AtualizaLinhaCabeca(tCobra cobra, int atualiza){
+    cobra.linha = atualiza;
 
-    return jogo.cobra;
+    return cobra;
 }
 
-tCobra AtualizaColunaCabeca(tJogo jogo, int atualiza){
-    jogo.cobra.coluna = atualiza;
+tCobra AtualizaColunaCabeca(tCobra cobra, int atualiza){
+    cobra.coluna = atualiza;
 
-    return jogo.cobra;
+    return cobra;
 }
 
-tMapa AtualizaMapa(tJogo jogo, int l, int c, char caract){
-    jogo.mapa.matriz[l][c] = caract;
+tMapa AtualizaMapa(tMapa mapa, int l, int c, char caract){
+    mapa.matriz[l][c] = caract;
 
-    return jogo.mapa;
+    return mapa;
 }
 
-tCobra AtualizaMorteCobra(tJogo jogo, int check){
-    jogo.cobra.morreu = check;
+tCobra AtualizaMorteCobra(tCobra cobra, int check){
+    cobra.morreu = check;
 
-    return jogo.cobra;
+    return cobra;
 }
 
-tCobra AtualizaPosCabeca(tJogo jogo, char check){
-    jogo.cobra.pos_cabeca = check;
+tCobra AtualizaPosCabeca(tCobra cobra, char check){
+    cobra.pos_cabeca = check;
 
-    return jogo.cobra;
+    return cobra;
 }
 
-tCobra AdicionaTamCorpo(tJogo jogo){
-    jogo.cobra.tam_corpo++;
+tCobra AdicionaTamCorpo(tCobra cobra){
+    cobra.tam_corpo++;
 
-    return jogo.cobra;
+    return cobra;
 }
 
-tEstatisticas AdicionaContMove(tJogo jogo){
-    jogo.stats.cont_moves++;
+tEstatisticas AdicionaContMove(tEstatisticas stats){
+    stats.cont_moves++;
 
-    return jogo.stats;
+    return stats;
 }
 
-tEstatisticas AdicionaNoPointMove(tJogo jogo){
-    jogo.stats.nopoint_moves++;
+tEstatisticas AdicionaNoPointMove(tEstatisticas stats){
+    stats.nopoint_moves++;
 
-    return jogo.stats;
+    return stats;
 }
 
-tEstatisticas AdicionaMoveRight(tJogo jogo){
-    jogo.stats.moves_right++;
+tEstatisticas AdicionaMoveRight(tEstatisticas stats){
+    stats.moves_right++;
 
-    return jogo.stats;
+    return stats;
 }
 
-tEstatisticas AdicionaMoveLeft(tJogo jogo){
-    jogo.stats.moves_left++;
+tEstatisticas AdicionaMoveLeft(tEstatisticas stats){
+    stats.moves_left++;
 
-    return jogo.stats;
+    return stats;
 }
 
-tEstatisticas AdicionaMoveUp(tJogo jogo){
-    jogo.stats.moves_up++;
+tEstatisticas AdicionaMoveUp(tEstatisticas stats){
+    stats.moves_up++;
 
-    return jogo.stats;
+    return stats;
 }
 
-tEstatisticas AdicionaMoveDown(tJogo jogo){
-    jogo.stats.moves_down++;
+tEstatisticas AdicionaMoveDown(tEstatisticas stats){
+    stats.moves_down++;
 
-    return jogo.stats;
+    return stats;
 }
 
-int IdentificaTunel(tJogo jogo, int l, int c){ // retorna V se for o tunel mais proximo da posicao 0 0 e F se for o outro;
-    return l == jogo.mapa.linha_tunel[0] && c == jogo.mapa.coluna_tunel[0];
+int IdentificaTunel(tMapa mapa, int l, int c){ // retorna V se for o tunel mais proximo da posicao 0 0 e F se for o outro;
+    return l == mapa.linha_tunel[0] && c == mapa.coluna_tunel[0];
 }
 
-int VerificaMorteCobra(tJogo jogo){
-    return jogo.cobra.morreu;
+int VerificaMorteCobra(tCobra cobra){
+    return cobra.morreu;
 }
 
-int UltrapassaLimites(tJogo jogo){
-    return jogo.cobra.linha > jogo.mapa.linha || jogo.cobra.linha < 1 || jogo.cobra.coluna > jogo.mapa.coluna || jogo.cobra.coluna < 1;
+int UltrapassaLimites(tCobra cobra, tMapa mapa){
+    return cobra.linha > mapa.linha || cobra.linha < 1 || cobra.coluna > mapa.coluna || cobra.coluna < 1;
 }
 
-int EhParede(tJogo jogo, int l, int c){
-    return jogo.mapa.matriz[l][c] == PAREDE;
+int EhParede(tMapa mapa, int l, int c){
+    return mapa.matriz[l][c] == PAREDE;
 }
 
-int EhComida(tJogo jogo, int l, int c){
-    return jogo.mapa.matriz[l][c] == COMIDA;
+int EhComida(tMapa mapa, int l, int c){
+    return mapa.matriz[l][c] == COMIDA;
 }
 
-int EhCabecaInicial(tJogo jogo, int l, int c){
-    return jogo.mapa.matriz[l][c] == RIGHT;
+int EhCabecaInicial(tMapa mapa, int l, int c){
+    return mapa.matriz[l][c] == RIGHT;
 }
 
-int EhCorpo(tJogo jogo, int l, int c){
-    return jogo.mapa.matriz[l][c] == CORPO;
+int EhCorpo(tMapa mapa, int l, int c){
+    return mapa.matriz[l][c] == CORPO;
 }
 
-int EhDinheiro(tJogo jogo, int l, int c){
-    return jogo.mapa.matriz[l][c] == DINHEIRO;
+int EhDinheiro(tMapa mapa, int l, int c){
+    return mapa.matriz[l][c] == DINHEIRO;
 }
 
-int EhVazio(tJogo jogo, int l, int c){
-    return jogo.mapa.matriz[l][c] == VAZIO;
+int EhVazio(tMapa mapa, int l, int c){
+    return mapa.matriz[l][c] == VAZIO;
 }
 
-int EhTunel(tJogo jogo, int l, int c){
-    return jogo.mapa.matriz[l][c] == TUNEL;
+int EhTunel(tMapa mapa, int l, int c){
+    return mapa.matriz[l][c] == TUNEL;
 }
 
 tCobra MudaPosCabeca(tJogo jogo){ // rotaciona a cabeca da cobra de acordo com o lance;
-    char cabeca = ObtemPosCabeca(jogo);
+    tCobra cobra;
+    cobra = jogo.cobra;
+    char cabeca = ObtemPosCabeca(cobra);
 
     if(jogo.lance == HORARIO){
         switch (cabeca){
@@ -569,7 +571,8 @@ tCobra MudaPosCabeca(tJogo jogo){ // rotaciona a cabeca da cobra de acordo com o
         }
     }
 
-    jogo.cobra.pos_cabeca = cabeca;
+    cobra.pos_cabeca = cabeca;
+    jogo.cobra = cobra;
 
     return jogo.cobra;
 }
@@ -579,31 +582,31 @@ tJogo MovimentaCorpo(tJogo jogo, int l, int c){
     int tam;
     int l2, c2;
 
-    tam = ObtemTamCorpo(jogo);
+    tam = ObtemTamCorpo(jogo.cobra);
 
-    if(!EhCorpo(jogo, l, c)){ /* a posicao deve ser diferente de CORPO pois se na posicao a frente estiver uma comida,
+    if(!EhCorpo(jogo.mapa, l, c)){ /* a posicao deve ser diferente de CORPO pois se na posicao a frente estiver uma comida,
                                 a funcao AtualizaPosCorpo coloca um corpo no lugar e nao eh necessario mover o corpo
                                 quando a cobra passa pela COMIDA;*/
         for(i = 0; i < tam; i++){
             if(!i){
-                l2 = ObtemLinhaCorpo(jogo, i);
-                c2 = ObtemColunaCorpo(jogo, i);
-                jogo.mapa = AtualizaMapa(jogo, l2, c2, VAZIO); // limpa a ultima posicao do corpo no mapa;
+                l2 = ObtemLinhaCorpo(jogo.cobra, i);
+                c2 = ObtemColunaCorpo(jogo.cobra, i);
+                jogo.mapa = AtualizaMapa(jogo.mapa, l2, c2, VAZIO); // limpa a ultima posicao do corpo no mapa;
             }
             if(i == tam - 1){ // a primeira posicao do corpo ocupara a antiga posicao da cabeca;
-                jogo.cobra = AtualizaLinhaCorpo(jogo, i, l);
-                jogo.cobra = AtualizaColunaCorpo(jogo, i, c);
-                jogo.mapa = AtualizaMapa(jogo, l, c, CORPO);
+                jogo.cobra = AtualizaLinhaCorpo(jogo.cobra, i, l);
+                jogo.cobra = AtualizaColunaCorpo(jogo.cobra, i, c);
+                jogo.mapa = AtualizaMapa(jogo.mapa, l, c, CORPO);
                 break;
             }
             // o corpo i se desloca para a posicao do corpo i + 1;
-            l2 = ObtemLinhaCorpo(jogo, i + 1);
-            c2 = ObtemColunaCorpo(jogo, i + 1);
-            jogo.cobra = AtualizaLinhaCorpo(jogo, i, l2);
-            jogo.cobra = AtualizaColunaCorpo(jogo, i, c2);
+            l2 = ObtemLinhaCorpo(jogo.cobra, i + 1);
+            c2 = ObtemColunaCorpo(jogo.cobra, i + 1);
+            jogo.cobra = AtualizaLinhaCorpo(jogo.cobra, i, l2);
+            jogo.cobra = AtualizaColunaCorpo(jogo.cobra, i, c2);
 
             // atualiza no mapa;
-            jogo.mapa = AtualizaMapa(jogo, l2, c2, CORPO);
+            jogo.mapa = AtualizaMapa(jogo.mapa, l2, c2, CORPO);
         }
     }
 
@@ -614,12 +617,12 @@ tJogo MataCorpo(tJogo jogo){
     int i, aux1, aux2;
     int tam;
 
-    tam = ObtemTamCorpo(jogo);
+    tam = ObtemTamCorpo(jogo.cobra);
 
     for(i = 0; i < tam; i++){ // varre todas as posicoes do corpo, colocando um 'X' em cada uma;
-        aux1 = ObtemLinhaCorpo(jogo, i);
-        aux2 = ObtemColunaCorpo(jogo, i);
-        jogo.mapa = AtualizaMapa(jogo, aux1, aux2, MORTA);
+        aux1 = ObtemLinhaCorpo(jogo.cobra, i);
+        aux2 = ObtemColunaCorpo(jogo.cobra, i);
+        jogo.mapa = AtualizaMapa(jogo.mapa, aux1, aux2, MORTA);
     }
 
     return jogo;
@@ -628,34 +631,34 @@ tJogo MataCorpo(tJogo jogo){
 tJogo MoveDireita(tJogo jogo){
     int l, c;
     // salva as posicoes nao alteradas da cabeca;
-    int save_linha = ObtemLinhaCabeca(jogo);
-    int save_coluna = ObtemColunaCabeca(jogo);
+    int save_linha = ObtemLinhaCabeca(jogo.cobra);
+    int save_coluna = ObtemColunaCabeca(jogo.cobra);
     
-    l = ObtemLinhaCabeca(jogo);
-    c = ObtemColunaCabeca(jogo);
+    l = ObtemLinhaCabeca(jogo.cobra);
+    c = ObtemColunaCabeca(jogo.cobra);
     c += 1; // provavel posicao futura da cabeca da cobra;
 
-    jogo.cobra = AtualizaColunaCabeca(jogo, c);
+    jogo.cobra = AtualizaColunaCabeca(jogo.cobra, c);
 
-    if(UltrapassaLimites(jogo)){ // verifica se a cobra ultrapassa os limites do mapa;
-        jogo.cobra = AtualizaColunaCabeca(jogo, 1);
+    if(UltrapassaLimites(jogo.cobra, jogo.mapa)){ // verifica se a cobra ultrapassa os limites do mapa;
+        jogo.cobra = AtualizaColunaCabeca(jogo.cobra, 1); // atualiza a posicao da cabeca pra coluna 1;
 
-        c = ObtemColunaCabeca(jogo);
+        c = ObtemColunaCabeca(jogo.cobra);
 
-        if(EhComida(jogo, l, c)){
-            jogo.mapa = AtualizaMapa(jogo, save_linha, save_coluna, CORPO); // coloca CORPO na antiga posicao da cabeca da cobra;
-            jogo.cobra = AtualizaPosCorpo(jogo, save_linha, save_coluna);
+        if(EhComida(jogo.mapa, l, c)){
+            jogo.mapa = AtualizaMapa(jogo.mapa, save_linha, save_coluna, CORPO); // coloca CORPO na antiga posicao da cabeca da cobra;
+            jogo.cobra = AtualizaPosCorpo(jogo.cobra, save_linha, save_coluna);
         }
         else{
-            jogo.mapa = AtualizaMapa(jogo, save_linha, save_coluna, VAZIO); // coloca VAZIO na antiga posicao da cabeca da cobra;
+            jogo.mapa = AtualizaMapa(jogo.mapa, save_linha, save_coluna, VAZIO); // coloca VAZIO na antiga posicao da cabeca da cobra;
         }
     }
-    if(EhTunel(jogo, l, c)){
-        c = ObtemColunaCabeca(jogo);
+    if(EhTunel(jogo.mapa, l, c)){
+        c = ObtemColunaCabeca(jogo.cobra);
 
         int ident_tunel1, ident_tunel2;
 
-        if(IdentificaTunel(jogo, l, c)){ // a cobra esta no tunel mais proximo da posicao 0 0;
+        if(IdentificaTunel(jogo.mapa, l, c)){ // a cobra esta no tunel mais proximo da posicao 0 0;
             ident_tunel1 = 0; // tunel destino da cobra;
             ident_tunel2 = 1; // tunel que a cobra "esta";
         }
@@ -664,41 +667,41 @@ tJogo MoveDireita(tJogo jogo){
             ident_tunel2 = 0;
         }
         // atualiza a futura posicao da cabeca da cobra;
-        l = ObtemLinhaTunel(jogo, ident_tunel2);
-        c = ObtemColunaTunel(jogo, ident_tunel2);
+        l = ObtemLinhaTunel(jogo.mapa, ident_tunel2);
+        c = ObtemColunaTunel(jogo.mapa, ident_tunel2);
         c += 1;
 
-        jogo.cobra = AtualizaLinhaCabeca(jogo, l);
-        jogo.cobra = AtualizaColunaCabeca(jogo, c);
+        jogo.cobra = AtualizaLinhaCabeca(jogo.cobra, l);
+        jogo.cobra = AtualizaColunaCabeca(jogo.cobra, c);
 
-        if(EhComida(jogo, l, c)){
-            jogo.mapa = AtualizaMapa(jogo, save_linha, save_coluna, CORPO); // coloca CORPO na antiga posicao da cabeca da cobra;
-            jogo.cobra = AtualizaPosCorpo(jogo, save_linha, save_coluna);
+        if(EhComida(jogo.mapa, l, c)){
+            jogo.mapa = AtualizaMapa(jogo.mapa, save_linha, save_coluna, CORPO); // coloca CORPO na antiga posicao da cabeca da cobra;
+            jogo.cobra = AtualizaPosCorpo(jogo.cobra, save_linha, save_coluna);
         }
         else{
-            jogo.mapa = AtualizaMapa(jogo, save_linha, save_coluna, VAZIO); // coloca VAZIO na antiga posicao da cabeca da cobra;
+            jogo.mapa = AtualizaMapa(jogo.mapa, save_linha, save_coluna, VAZIO); // coloca VAZIO na antiga posicao da cabeca da cobra;
         }
-        if(UltrapassaLimites(jogo)){ // verifica se a cobra ultrapassa os limites do mapa;
-            jogo.cobra = AtualizaColunaCabeca(jogo, 1);
+        if(UltrapassaLimites(jogo.cobra, jogo.mapa)){ // verifica se a cobra ultrapassa os limites do mapa;
+            jogo.cobra = AtualizaColunaCabeca(jogo.cobra, 1);
 
-            c = ObtemColunaCabeca(jogo);
+            c = ObtemColunaCabeca(jogo.cobra);
 
-            if(EhComida(jogo, l, c)){
-                jogo.mapa = AtualizaMapa(jogo, save_linha, save_coluna, CORPO); // coloca CORPO na antiga posicao da cabeca da cobra;
-                jogo.cobra = AtualizaPosCorpo(jogo, save_linha, save_coluna);
+            if(EhComida(jogo.mapa, l, c)){
+                jogo.mapa = AtualizaMapa(jogo.mapa, save_linha, save_coluna, CORPO); // coloca CORPO na antiga posicao da cabeca da cobra;
+                jogo.cobra = AtualizaPosCorpo(jogo.cobra, save_linha, save_coluna);
             }
             else{
-                jogo.mapa = AtualizaMapa(jogo, save_linha, save_coluna, VAZIO); // coloca VAZIO na antiga posicao da cabeca da cobra;
+                jogo.mapa = AtualizaMapa(jogo.mapa, save_linha, save_coluna, VAZIO); // coloca VAZIO na antiga posicao da cabeca da cobra;
             }
         }
     }
     else{
-        if(EhComida(jogo, l, c)){
-            jogo.mapa = AtualizaMapa(jogo, save_linha, save_coluna, CORPO); // coloca CORPO na antiga posicao da cabeca da cobra;
-            jogo.cobra = AtualizaPosCorpo(jogo, save_linha, save_coluna);
+        if(EhComida(jogo.mapa, l, c)){
+            jogo.mapa = AtualizaMapa(jogo.mapa, save_linha, save_coluna, CORPO); // coloca CORPO na antiga posicao da cabeca da cobra;
+            jogo.cobra = AtualizaPosCorpo(jogo.cobra, save_linha, save_coluna);
         }
         else{
-            jogo.mapa = AtualizaMapa(jogo, save_linha, save_coluna, VAZIO); // coloca VAZIO na antiga posicao da cabeca da cobra;
+            jogo.mapa = AtualizaMapa(jogo.mapa, save_linha, save_coluna, VAZIO); // coloca VAZIO na antiga posicao da cabeca da cobra;
         }
     }
 
@@ -708,35 +711,35 @@ tJogo MoveDireita(tJogo jogo){
 tJogo MoveEsquerda(tJogo jogo){
     int l, c, linha_mapa, coluna_mapa;
 
-    int save_linha = ObtemLinhaCabeca(jogo);
-    int save_coluna = ObtemColunaCabeca(jogo);
+    int save_linha = ObtemLinhaCabeca(jogo.cobra);
+    int save_coluna = ObtemColunaCabeca(jogo.cobra);
 
-    linha_mapa = ObtemLinhaMapa(jogo);
-    coluna_mapa = ObtemColunaMapa(jogo);
+    linha_mapa = ObtemLinhaMapa(jogo.mapa);
+    coluna_mapa = ObtemColunaMapa(jogo.mapa);
 
-    l = ObtemLinhaCabeca(jogo);
-    c = ObtemColunaCabeca(jogo);
+    l = ObtemLinhaCabeca(jogo.cobra);
+    c = ObtemColunaCabeca(jogo.cobra);
     c -= 1;
 
-    jogo.cobra = AtualizaColunaCabeca(jogo, c);
+    jogo.cobra = AtualizaColunaCabeca(jogo.cobra, c);
 
-    if(UltrapassaLimites(jogo)){ // verifica se a cobra ultrapassa os limites do mapa;
-        jogo.cobra = AtualizaColunaCabeca(jogo, coluna_mapa);
+    if(UltrapassaLimites(jogo.cobra, jogo.mapa)){ // verifica se a cobra ultrapassa os limites do mapa;
+        jogo.cobra = AtualizaColunaCabeca(jogo.cobra, coluna_mapa);
 
-        c = ObtemColunaCabeca(jogo);
+        c = ObtemColunaCabeca(jogo.cobra);
 
-        if(EhComida(jogo, l, c)){
-            jogo.mapa = AtualizaMapa(jogo, save_linha, save_coluna, CORPO);
-            jogo.cobra = AtualizaPosCorpo(jogo, save_linha, save_coluna);
+        if(EhComida(jogo.mapa, l, c)){
+            jogo.mapa = AtualizaMapa(jogo.mapa, save_linha, save_coluna, CORPO);
+            jogo.cobra = AtualizaPosCorpo(jogo.cobra, save_linha, save_coluna);
         }
         else{
-            jogo.mapa = AtualizaMapa(jogo, save_linha, save_coluna, VAZIO);
+            jogo.mapa = AtualizaMapa(jogo.mapa, save_linha, save_coluna, VAZIO);
         }
     }
-    else if(EhTunel(jogo, l, c)){
+    else if(EhTunel(jogo.mapa, l, c)){
         int ident_tunel1, ident_tunel2;
 
-        if(IdentificaTunel(jogo, l, c)){ // a cobra esta no tunel mais proximo da posicao 0 0;
+        if(IdentificaTunel(jogo.mapa, l, c)){ // a cobra esta no tunel mais proximo da posicao 0 0;
             ident_tunel1 = 0; // tunel destino da cobra;
             ident_tunel2 = 1; // tunel que a cobra "esta";
         }
@@ -745,41 +748,41 @@ tJogo MoveEsquerda(tJogo jogo){
             ident_tunel2 = 0;
         }
 
-        l = ObtemLinhaTunel(jogo, ident_tunel2);
-        c = ObtemColunaTunel(jogo, ident_tunel2);
+        l = ObtemLinhaTunel(jogo.mapa, ident_tunel2);
+        c = ObtemColunaTunel(jogo.mapa, ident_tunel2);
         c -= 1;
 
-        jogo.cobra = AtualizaLinhaCabeca(jogo, l);
-        jogo.cobra = AtualizaColunaCabeca(jogo, c);
+        jogo.cobra = AtualizaLinhaCabeca(jogo.cobra, l);
+        jogo.cobra = AtualizaColunaCabeca(jogo.cobra, c);
 
-        if(EhComida(jogo, l, c)){
-            jogo.mapa = AtualizaMapa(jogo, save_linha, save_coluna, CORPO);
-            jogo.cobra = AtualizaPosCorpo(jogo, save_linha, save_coluna);
+        if(EhComida(jogo.mapa, l, c)){
+            jogo.mapa = AtualizaMapa(jogo.mapa, save_linha, save_coluna, CORPO);
+            jogo.cobra = AtualizaPosCorpo(jogo.cobra, save_linha, save_coluna);
         }
-        else if(!UltrapassaLimites(jogo)){
-            jogo.mapa = AtualizaMapa(jogo, save_linha, save_coluna, VAZIO);
+        else if(!UltrapassaLimites(jogo.cobra, jogo.mapa)){
+            jogo.mapa = AtualizaMapa(jogo.mapa, save_linha, save_coluna, VAZIO);
         }
-        if(UltrapassaLimites(jogo)){ // verifica se a cobra ultrapassa os limites do mapa;
-            jogo.cobra = AtualizaColunaCabeca(jogo, coluna_mapa);
+        if(UltrapassaLimites(jogo.cobra, jogo.mapa)){ // verifica se a cobra ultrapassa os limites do mapa;
+            jogo.cobra = AtualizaColunaCabeca(jogo.cobra, coluna_mapa);
 
-            c = ObtemColunaCabeca(jogo);
+            c = ObtemColunaCabeca(jogo.cobra);
 
-            if(EhComida(jogo, l, c)){
-                jogo.mapa = AtualizaMapa(jogo, save_linha, save_coluna, CORPO);
-                jogo.cobra = AtualizaPosCorpo(jogo, save_linha, save_coluna);
+            if(EhComida(jogo.mapa, l, c)){
+                jogo.mapa = AtualizaMapa(jogo.mapa, save_linha, save_coluna, CORPO);
+                jogo.cobra = AtualizaPosCorpo(jogo.cobra, save_linha, save_coluna);
             }
             else{
-                jogo.mapa = AtualizaMapa(jogo, save_linha, save_coluna, VAZIO);
+                jogo.mapa = AtualizaMapa(jogo.mapa, save_linha, save_coluna, VAZIO);
             }
         }
     }
     else{
-        if(EhComida(jogo, l, c)){
-            jogo.mapa = AtualizaMapa(jogo, save_linha, save_coluna, CORPO);
-            jogo.cobra = AtualizaPosCorpo(jogo, save_linha, save_coluna);
+        if(EhComida(jogo.mapa, l, c)){
+            jogo.mapa = AtualizaMapa(jogo.mapa, save_linha, save_coluna, CORPO);
+            jogo.cobra = AtualizaPosCorpo(jogo.cobra, save_linha, save_coluna);
         }
         else{
-            jogo.mapa = AtualizaMapa(jogo, save_linha, save_coluna, VAZIO);
+            jogo.mapa = AtualizaMapa(jogo.mapa, save_linha, save_coluna, VAZIO);
         }
     }
 
@@ -789,35 +792,35 @@ tJogo MoveEsquerda(tJogo jogo){
 tJogo MoveCima(tJogo jogo){
     int l, c, linha_mapa, coluna_mapa;
 
-    linha_mapa = ObtemLinhaMapa(jogo);
-    coluna_mapa = ObtemColunaMapa(jogo);
+    linha_mapa = ObtemLinhaMapa(jogo.mapa);
+    coluna_mapa = ObtemColunaMapa(jogo.mapa);
 
-    int save_linha = ObtemLinhaCabeca(jogo);
-    int save_coluna = ObtemColunaCabeca(jogo);
+    int save_linha = ObtemLinhaCabeca(jogo.cobra);
+    int save_coluna = ObtemColunaCabeca(jogo.cobra);
 
-    l = ObtemLinhaCabeca(jogo);
-    c = ObtemColunaCabeca(jogo);
+    l = ObtemLinhaCabeca(jogo.cobra);
+    c = ObtemColunaCabeca(jogo.cobra);
     l -= 1;
 
-    jogo.cobra = AtualizaLinhaCabeca(jogo, l);
+    jogo.cobra = AtualizaLinhaCabeca(jogo.cobra, l);
     
-    if(UltrapassaLimites(jogo)){ // verifica se a cobra ultrapassa os limites do mapa;
-        jogo.cobra = AtualizaLinhaCabeca(jogo, linha_mapa);
+    if(UltrapassaLimites(jogo.cobra, jogo.mapa)){ // verifica se a cobra ultrapassa os limites do mapa;
+        jogo.cobra = AtualizaLinhaCabeca(jogo.cobra, linha_mapa);
 
-        l = ObtemLinhaCabeca(jogo);
+        l = ObtemLinhaCabeca(jogo.cobra);
 
-        if(EhComida(jogo, l, c)){
-            jogo.mapa = AtualizaMapa(jogo, save_linha, save_coluna, CORPO);
-            jogo.cobra = AtualizaPosCorpo(jogo, save_linha, save_coluna);
+        if(EhComida(jogo.mapa, l, c)){
+            jogo.mapa = AtualizaMapa(jogo.mapa, save_linha, save_coluna, CORPO);
+            jogo.cobra = AtualizaPosCorpo(jogo.cobra, save_linha, save_coluna);
         }
         else{
-            jogo.mapa = AtualizaMapa(jogo, save_linha, save_coluna, VAZIO);
+            jogo.mapa = AtualizaMapa(jogo.mapa, save_linha, save_coluna, VAZIO);
         }
     }
-    else if(EhTunel(jogo, l, c)){
+    else if(EhTunel(jogo.mapa, l, c)){
         int ident_tunel1, ident_tunel2;
 
-        if(IdentificaTunel(jogo, l, c)){ // a cobra esta no tunel mais proximo da posicao 0 0;
+        if(IdentificaTunel(jogo.mapa, l, c)){ // a cobra esta no tunel mais proximo da posicao 0 0;
             ident_tunel1 = 0; // tunel destino da cobra;
             ident_tunel2 = 1; // tunel que a cobra "esta";
         }
@@ -826,41 +829,41 @@ tJogo MoveCima(tJogo jogo){
             ident_tunel2 = 0;
         }
 
-        l = ObtemLinhaTunel(jogo, ident_tunel2);
-        c = ObtemColunaTunel(jogo, ident_tunel2);
+        l = ObtemLinhaTunel(jogo.mapa, ident_tunel2);
+        c = ObtemColunaTunel(jogo.mapa, ident_tunel2);
         l -= 1;
 
-        jogo.cobra = AtualizaLinhaCabeca(jogo, l);
-        jogo.cobra = AtualizaColunaCabeca(jogo, c);
+        jogo.cobra = AtualizaLinhaCabeca(jogo.cobra, l);
+        jogo.cobra = AtualizaColunaCabeca(jogo.cobra, c);
 
-        if(EhComida(jogo, l, c)){
-            jogo.mapa = AtualizaMapa(jogo, save_linha, save_coluna, CORPO);
-            jogo.cobra = AtualizaPosCorpo(jogo, save_linha, save_coluna);
+        if(EhComida(jogo.mapa, l, c)){
+            jogo.mapa = AtualizaMapa(jogo.mapa, save_linha, save_coluna, CORPO);
+            jogo.cobra = AtualizaPosCorpo(jogo.cobra, save_linha, save_coluna);
         }
         else{
-            jogo.mapa = AtualizaMapa(jogo, save_linha, save_coluna, VAZIO);
+            jogo.mapa = AtualizaMapa(jogo.mapa, save_linha, save_coluna, VAZIO);
         }
-        if(UltrapassaLimites(jogo)){ // verifica se a cobra ultrapassa os limites do mapa;
-            jogo.cobra = AtualizaLinhaCabeca(jogo, linha_mapa);
+        if(UltrapassaLimites(jogo.cobra, jogo.mapa)){ // verifica se a cobra ultrapassa os limites do mapa;
+            jogo.cobra = AtualizaLinhaCabeca(jogo.cobra, linha_mapa);
 
-            l = ObtemLinhaCabeca(jogo);
+            l = ObtemLinhaCabeca(jogo.cobra);
 
-            if(EhComida(jogo, l, c)){
-                jogo.mapa = AtualizaMapa(jogo, save_linha, save_coluna, CORPO);
-                jogo.cobra = AtualizaPosCorpo(jogo, save_linha, save_coluna);
+            if(EhComida(jogo.mapa, l, c)){
+                jogo.mapa = AtualizaMapa(jogo.mapa, save_linha, save_coluna, CORPO);
+                jogo.cobra = AtualizaPosCorpo(jogo.cobra, save_linha, save_coluna);
             }
             else{
-                jogo.mapa = AtualizaMapa(jogo, save_linha, save_coluna, VAZIO);
+                jogo.mapa = AtualizaMapa(jogo.mapa, save_linha, save_coluna, VAZIO);
             }
         }
     }
     else{
-        if(EhComida(jogo, l, c)){
-            jogo.mapa = AtualizaMapa(jogo, save_linha, save_coluna, CORPO);
-            jogo.cobra = AtualizaPosCorpo(jogo, save_linha, save_coluna);
+        if(EhComida(jogo.mapa, l, c)){
+            jogo.mapa = AtualizaMapa(jogo.mapa, save_linha, save_coluna, CORPO);
+            jogo.cobra = AtualizaPosCorpo(jogo.cobra, save_linha, save_coluna);
         }
         else{
-            jogo.mapa = AtualizaMapa(jogo, save_linha, save_coluna, VAZIO);
+            jogo.mapa = AtualizaMapa(jogo.mapa, save_linha, save_coluna, VAZIO);
         }
     }
 
@@ -870,35 +873,35 @@ tJogo MoveCima(tJogo jogo){
 tJogo MoveBaixo(tJogo jogo){
     int l, c, linha_mapa, coluna_mapa;
 
-    int save_linha = ObtemLinhaCabeca(jogo);
-    int save_coluna = ObtemColunaCabeca(jogo);
+    int save_linha = ObtemLinhaCabeca(jogo.cobra);
+    int save_coluna = ObtemColunaCabeca(jogo.cobra);
 
-    linha_mapa = ObtemLinhaMapa(jogo);
-    coluna_mapa = ObtemColunaMapa(jogo);
+    linha_mapa = ObtemLinhaMapa(jogo.mapa);
+    coluna_mapa = ObtemColunaMapa(jogo.mapa);
 
-    l = ObtemLinhaCabeca(jogo);
-    c = ObtemColunaCabeca(jogo);
+    l = ObtemLinhaCabeca(jogo.cobra);
+    c = ObtemColunaCabeca(jogo.cobra);
     l += 1;
 
-    jogo.cobra = AtualizaLinhaCabeca(jogo, l);
+    jogo.cobra = AtualizaLinhaCabeca(jogo.cobra, l);
 
-    if(UltrapassaLimites(jogo)){ // verifica se a cobra ultrapassa os limites do mapa;
-        jogo.cobra = AtualizaLinhaCabeca(jogo, 1);
+    if(UltrapassaLimites(jogo.cobra, jogo.mapa)){ // verifica se a cobra ultrapassa os limites do mapa;
+        jogo.cobra = AtualizaLinhaCabeca(jogo.cobra, 1);
             
-        l = ObtemLinhaCabeca(jogo);
+        l = ObtemLinhaCabeca(jogo.cobra);
 
-        if(EhComida(jogo, l, c)){
-            jogo.mapa = AtualizaMapa(jogo, save_linha, save_coluna, CORPO);
-            jogo.cobra = AtualizaPosCorpo(jogo, save_linha, save_coluna);
+        if(EhComida(jogo.mapa, l, c)){
+            jogo.mapa = AtualizaMapa(jogo.mapa, save_linha, save_coluna, CORPO);
+            jogo.cobra = AtualizaPosCorpo(jogo.cobra, save_linha, save_coluna);
         }
         else{
-            jogo.mapa = AtualizaMapa(jogo, save_linha, save_coluna, VAZIO);
+            jogo.mapa = AtualizaMapa(jogo.mapa, save_linha, save_coluna, VAZIO);
         }
     }
-    else if(EhTunel(jogo, l, c)){
+    else if(EhTunel(jogo.mapa, l, c)){
         int ident_tunel1, ident_tunel2;
 
-        if(IdentificaTunel(jogo, l, c)){ // a cobra esta no tunel mais proximo da posicao 0 0;
+        if(IdentificaTunel(jogo.mapa, l, c)){ // a cobra esta no tunel mais proximo da posicao 0 0;
             ident_tunel1 = 0; // tunel destino da cobra;
             ident_tunel2 = 1; // tunel que a cobra "esta";
         }
@@ -907,41 +910,41 @@ tJogo MoveBaixo(tJogo jogo){
             ident_tunel2 = 0;
         }
 
-        l = ObtemLinhaTunel(jogo, ident_tunel2);
-        c = ObtemColunaTunel(jogo, ident_tunel2);
+        l = ObtemLinhaTunel(jogo.mapa, ident_tunel2);
+        c = ObtemColunaTunel(jogo.mapa, ident_tunel2);
         l += 1;
 
-        jogo.cobra = AtualizaLinhaCabeca(jogo, l);
-        jogo.cobra = AtualizaColunaCabeca(jogo, c);
+        jogo.cobra = AtualizaLinhaCabeca(jogo.cobra, l);
+        jogo.cobra = AtualizaColunaCabeca(jogo.cobra, c);
 
-        if(EhComida(jogo, l, c)){
-            jogo.mapa = AtualizaMapa(jogo, save_linha, save_coluna, CORPO);
-            jogo.cobra = AtualizaPosCorpo(jogo, save_linha, save_coluna);
+        if(EhComida(jogo.mapa, l, c)){
+            jogo.mapa = AtualizaMapa(jogo.mapa, save_linha, save_coluna, CORPO);
+            jogo.cobra = AtualizaPosCorpo(jogo.cobra, save_linha, save_coluna);
         }
         else{
-            jogo.mapa = AtualizaMapa(jogo, save_linha, save_coluna, VAZIO);
+            jogo.mapa = AtualizaMapa(jogo.mapa, save_linha, save_coluna, VAZIO);
         }
-        if(UltrapassaLimites(jogo)){ // verifica se a cobra ultrapassa os limites do mapa;
-            jogo.cobra = AtualizaLinhaCabeca(jogo, 1);
+        if(UltrapassaLimites(jogo.cobra, jogo.mapa)){ // verifica se a cobra ultrapassa os limites do mapa;
+            jogo.cobra = AtualizaLinhaCabeca(jogo.cobra, 1);
 
-            l = ObtemLinhaCabeca(jogo);
+            l = ObtemLinhaCabeca(jogo.cobra);
 
-            if(EhComida(jogo, l, c)){
-                jogo.mapa = AtualizaMapa(jogo, save_linha, save_coluna, CORPO);
-                jogo.cobra = AtualizaPosCorpo(jogo, save_linha, save_coluna);
+            if(EhComida(jogo.mapa, l, c)){
+                jogo.mapa = AtualizaMapa(jogo.mapa, save_linha, save_coluna, CORPO);
+                jogo.cobra = AtualizaPosCorpo(jogo.cobra, save_linha, save_coluna);
             }
             else{
-                jogo.mapa = AtualizaMapa(jogo, save_linha, save_coluna, VAZIO);
+                jogo.mapa = AtualizaMapa(jogo.mapa, save_linha, save_coluna, VAZIO);
             }
         }
     }
     else{
-        if(EhComida(jogo, l, c)){
-            jogo.mapa = AtualizaMapa(jogo, save_linha, save_coluna, CORPO);
-            jogo.cobra = AtualizaPosCorpo(jogo, save_linha, save_coluna);
+        if(EhComida(jogo.mapa, l, c)){
+            jogo.mapa = AtualizaMapa(jogo.mapa, save_linha, save_coluna, CORPO);
+            jogo.cobra = AtualizaPosCorpo(jogo.cobra, save_linha, save_coluna);
         }
         else{
-            jogo.mapa = AtualizaMapa(jogo, save_linha, save_coluna, VAZIO);
+            jogo.mapa = AtualizaMapa(jogo.mapa, save_linha, save_coluna, VAZIO);
         }
     }
 
@@ -949,25 +952,25 @@ tJogo MoveBaixo(tJogo jogo){
 }
 
 tJogo MovimentaCobra(tJogo jogo){
-    int save_linha = ObtemLinhaCabeca(jogo), save_coluna = ObtemColunaCabeca(jogo); // guarda a posicao da cabeca da cobra sem as mudancas a serem feitas;
+    int save_linha = ObtemLinhaCabeca(jogo.cobra), save_coluna = ObtemColunaCabeca(jogo.cobra); // guarda a posicao da cabeca da cobra sem as mudancas a serem feitas;
 
-    char cabeca = ObtemPosCabeca(jogo);
+    char cabeca = ObtemPosCabeca(jogo.cobra);
 
     if(cabeca == RIGHT){ // CASO 1;
         jogo = MoveDireita(jogo);
-        jogo.stats = AdicionaMoveRight(jogo);
+        jogo.stats = AdicionaMoveRight(jogo.stats);
     }
     else if(cabeca == LEFT){ // CASO 2;
         jogo = MoveEsquerda(jogo);
-        jogo.stats = AdicionaMoveLeft(jogo);
+        jogo.stats = AdicionaMoveLeft(jogo.stats);
     }
     else if(cabeca == UP){ // CASO 3;
         jogo = MoveCima(jogo);
-        jogo.stats = AdicionaMoveUp(jogo);
+        jogo.stats = AdicionaMoveUp(jogo.stats);
     }
     else if(cabeca == DOWN){ // CASO 4;
         jogo = MoveBaixo(jogo);
-        jogo.stats = AdicionaMoveDown(jogo);
+        jogo.stats = AdicionaMoveDown(jogo.stats);
     }
 
     jogo = MovimentaCorpo(jogo, save_linha, save_coluna);
@@ -978,71 +981,91 @@ tJogo MovimentaCobra(tJogo jogo){
 tJogo CorrigeMovimento(tJogo jogo, FILE * pfile_resumo){ // corrige o movimento da cabeca e atualiza variaveis;
     int l, c, tam, qtd_comida, qtd_moves;
 
-    l = ObtemLinhaCabeca(jogo);
-    c = ObtemColunaCabeca(jogo);
-    qtd_moves = ObtemQtdMoves(jogo);
+    l = ObtemLinhaCabeca(jogo.cobra);
+    c = ObtemColunaCabeca(jogo.cobra);
+    qtd_moves = ObtemQtdMoves(jogo.stats);
 
     // atualiza as variaveis de acordo com a proxima posicao da cobra;
-    if(EhParede(jogo, l, c) || EhCorpo(jogo, l, c)){
-        jogo.cobra = AtualizaMorteCobra(jogo, 1);
-        jogo.cobra = AtualizaPosCabeca(jogo, MORTA);
+    if(EhParede(jogo.mapa, l, c) || EhCorpo(jogo.mapa, l, c)){
+        jogo.cobra = AtualizaMorteCobra(jogo.cobra, 1);
+        jogo.cobra = AtualizaPosCabeca(jogo.cobra, MORTA);
         jogo = MataCorpo(jogo);
-
+        // printa resumo;
         fprintf(pfile_resumo, "Movimento %d (%c) resultou no fim de jogo por conta de colisao\n", qtd_moves, jogo.lance);
-        jogo.stats = AdicionaNoPointMove(jogo);
+        jogo.stats = AdicionaNoPointMove(jogo.stats);
     }
-    else if(EhComida(jogo, l, c)){
+    else if(EhComida(jogo.mapa, l, c)){
         jogo.pontuacao++;
-        jogo.cobra = AdicionaTamCorpo(jogo);
+        jogo.cobra = AdicionaTamCorpo(jogo.cobra);
 
-        tam = ObtemTamCorpo(jogo);
-        qtd_comida = ObtemQtdComida(jogo);
+        tam = ObtemTamCorpo(jogo.cobra);
+        qtd_comida = ObtemQtdComida(jogo.mapa);
 
         if(tam != qtd_comida){
-        fprintf(pfile_resumo, "Movimento %d (%c) fez a cobra crescer para o tamanho %d\n", qtd_moves, jogo.lance, tam + 1);
+            // printa resumo;
+            fprintf(pfile_resumo, "Movimento %d (%c) fez a cobra crescer para o tamanho %d\n", qtd_moves, jogo.lance, tam + 1);
         }
     }
-    else if(EhDinheiro(jogo, l, c)){
+    else if(EhDinheiro(jogo.mapa, l, c)){
         jogo.pontuacao += 10;
+        // printa resumo;
         fprintf(pfile_resumo, "Movimento %d (%c) gerou dinheiro\n", qtd_moves, jogo.lance);
     }
     else{
-        jogo.stats = AdicionaNoPointMove(jogo);
+        jogo.stats = AdicionaNoPointMove(jogo.stats);
     }
     // atualiza a posicao da cabeca da cobra no mapa;
-    char poscabeca = ObtemPosCabeca(jogo);
-    jogo.mapa = AtualizaMapa(jogo, l, c, poscabeca);
+    char poscabeca = ObtemPosCabeca(jogo.cobra);
+    jogo.mapa = AtualizaMapa(jogo.mapa, l, c, poscabeca);
 
     return jogo;
 }
 
-void ImprimeEstadoJogo(tJogo jogo){
+void ImprimeEstadoJogo(tJogo jogo, tMapa mapa){
     int i, j;
-    int l = ObtemLinhaMapa(jogo), c = ObtemColunaMapa(jogo);
+    int l = ObtemLinhaMapa(jogo.mapa), c = ObtemColunaMapa(jogo.mapa);
 
     printf("Estado do jogo apos o movimento '%c':\n", jogo.lance);
     for(i = 1; i <= l; i++){
         for(j = 1; j <= c; j++){
-            printf("%c", jogo.mapa.matriz[i][j]);
+            printf("%c", mapa.matriz[i][j]);
         }
         printf("\n");
     }
     printf("Pontuacao: %d\n", jogo.pontuacao);
 }
 
+tJogo JogaJogo(tJogo jogo, FILE * pfile_resumo){
+    jogo.lance = ObtemLance(jogo);
+    jogo.stats = AdicionaContMove(jogo.stats);
+    
+    jogo.cobra = MudaPosCabeca(jogo);
+    jogo = MovimentaCobra(jogo);
+    jogo = CorrigeMovimento(jogo, pfile_resumo);
+    ImprimeEstadoJogo(jogo, jogo.mapa);
+    jogo.stats = PreencheHeatMap(jogo.cobra, jogo.stats);
+    
+    return jogo;
+}
+
 int AcabouJogo(tJogo jogo, FILE * pfile_resumo){
-    if(VerificaMorteCobra(jogo)){
+    if(VerificaMorteCobra(jogo.cobra)){
         printf("Game over!\n");
         printf("Pontuacao final: %d\n", jogo.pontuacao);
         return 1;
     }
+
+    int tam_corpo = ObtemTamCorpo(jogo.cobra);
+    int qtd_comida = ObtemQtdComida(jogo.mapa);
+    int cont_moves = ObtemQtdMoves(jogo.stats);
+
     // verifica se o tamanho do corpo eh igual a quantidade de comida existente no mapa nao modificado;
     // verifica se existe comida no mapa;
-    if(jogo.cobra.tam_corpo == jogo.mapa.qtd_comida || jogo.mapa.qtd_comida == 0){
+    if(tam_corpo == qtd_comida || qtd_comida == 0){
         printf("Voce venceu!\n");
         printf("Pontuacao final: %d\n", jogo.pontuacao);
-        if(jogo.cobra.tam_corpo == jogo.mapa.qtd_comida){
-            fprintf(pfile_resumo, "Movimento %d (%c) fez a cobra crescer para o tamanho %d, terminando o jogo\n", jogo.stats.cont_moves, jogo.lance, jogo.cobra.tam_corpo + 1);
+        if(tam_corpo == qtd_comida){
+            fprintf(pfile_resumo, "Movimento %d (%c) fez a cobra crescer para o tamanho %d, terminando o jogo\n", cont_moves, jogo.lance, tam_corpo + 1);
         }
         return 1;
     }
@@ -1050,74 +1073,60 @@ int AcabouJogo(tJogo jogo, FILE * pfile_resumo){
     return 0;
 }
 
-tJogo JogaJogo(tJogo jogo, FILE * pfile_resumo){
-    jogo.lance = ObtemLance(jogo);
-    jogo.stats = AdicionaContMove(jogo);
-    //jogo.stats.cont_moves++;
-    
-    jogo.cobra = MudaPosCabeca(jogo);
-    jogo = MovimentaCobra(jogo);
-    jogo = CorrigeMovimento(jogo, pfile_resumo);
-    ImprimeEstadoJogo(jogo);
-    jogo.stats = PreencheHeatMap(jogo);
-    
-    return jogo;
+void ImprimeEstatisticas(tEstatisticas stats, FILE * pfile_stats){
+    fprintf(pfile_stats, "Numero de movimentos: %d\n", stats.cont_moves);
+    fprintf(pfile_stats, "Numero de movimentos sem pontuar: %d\n", stats.nopoint_moves);
+    fprintf(pfile_stats, "Numero de movimentos para baixo: %d\n", stats.moves_down);
+    fprintf(pfile_stats, "Numero de movimentos para cima: %d\n", stats.moves_up);
+    fprintf(pfile_stats, "Numero de movimentos para esquerda: %d\n", stats.moves_left);
+    fprintf(pfile_stats, "Numero de movimentos para direita: %d\n", stats.moves_right);
 }
 
-void ImprimeEstatisticas(tJogo jogo, FILE * pfile_stats){
-    fprintf(pfile_stats, "Numero de movimentos: %d\n", jogo.stats.cont_moves);
-    fprintf(pfile_stats, "Numero de movimentos sem pontuar: %d\n", jogo.stats.nopoint_moves);
-    fprintf(pfile_stats, "Numero de movimentos para baixo: %d\n", jogo.stats.moves_down);
-    fprintf(pfile_stats, "Numero de movimentos para cima: %d\n", jogo.stats.moves_up);
-    fprintf(pfile_stats, "Numero de movimentos para esquerda: %d\n", jogo.stats.moves_left);
-    fprintf(pfile_stats, "Numero de movimentos para direita: %d\n", jogo.stats.moves_right);
-}
-
-tEstatisticas PreencheHeatMap(tJogo jogo){
-    int l = ObtemLinhaCabeca(jogo), c = ObtemColunaCabeca(jogo);
+tEstatisticas PreencheHeatMap(tCobra cobra, tEstatisticas stats){
+    int l = ObtemLinhaCabeca(cobra), c = ObtemColunaCabeca(cobra);
     
-    jogo.stats.heatmap[l][c]++;
+    stats.heatmap[l][c]++;
 
-    return jogo.stats;
+    return stats;
 }
 
-void ImprimeRanking(tJogo jogo, FILE * pfile_rank){
+void ImprimeHeatMap(tMapa mapa, tEstatisticas stats, FILE * pfile_heatmap){
+    int i, j;
+
+    for(i = 1; i <= mapa.linha; i++){
+        for(j = 1; j <= mapa.coluna; j++){
+            if(j == mapa.coluna){
+                fprintf(pfile_heatmap, "%d", stats.heatmap[i][j]);
+            }
+            else{
+                fprintf(pfile_heatmap, "%d ", stats.heatmap[i][j]);
+            }
+        }
+        fprintf(pfile_heatmap, "\n");
+    }
+}
+
+void ImprimeRanking(tMapa mapa, tEstatisticas stats, FILE * pfile_rank){
     int i, j, aux, maior;
     // obtem o maior numero de vezes que a cobra passou em uma especifica posicao;
-    for(i = 1; i <= jogo.mapa.linha; i++){
-        for(j = 1; j <= jogo.mapa.coluna; j++){
+    for(i = 1; i <= mapa.linha; i++){
+        for(j = 1; j <= mapa.coluna; j++){
             if(i == 1 && j == 1){
-                maior = jogo.stats.heatmap[i][j];
+                maior = stats.heatmap[i][j];
             }
-            else if(jogo.stats.heatmap[i][j] > maior){
-                maior = jogo.stats.heatmap[i][j];
+            else if(stats.heatmap[i][j] > maior){
+                maior = stats.heatmap[i][j];
             }
         }
     }
     // printa do maior para o menor;
     for(aux = maior; aux > 0; aux--){
-        for(i = 1; i <= jogo.mapa.linha; i++){
-            for(j = 1; j <= jogo.mapa.coluna; j++){
-                if(jogo.stats.heatmap[i][j] == aux){
-                    fprintf(pfile_rank, "(%d, %d) - %d\n", i - 1, j - 1, jogo.stats.heatmap[i][j]);
+        for(i = 1; i <= mapa.linha; i++){
+            for(j = 1; j <= mapa.coluna; j++){
+                if(stats.heatmap[i][j] == aux){
+                    fprintf(pfile_rank, "(%d, %d) - %d\n", i - 1, j - 1, stats.heatmap[i][j]);
                 }
             }
         }
-    }
-}
-
-void ImprimeHeatMap(tJogo jogo, FILE * pfile_heatmap){
-    int i, j;
-
-    for(i = 1; i <= jogo.mapa.linha; i++){
-        for(j = 1; j <= jogo.mapa.coluna; j++){
-            if(j == jogo.mapa.coluna){
-                fprintf(pfile_heatmap, "%d", jogo.stats.heatmap[i][j]);
-            }
-            else{
-                fprintf(pfile_heatmap, "%d ", jogo.stats.heatmap[i][j]);
-            }
-        }
-        fprintf(pfile_heatmap, "\n");
     }
 }
